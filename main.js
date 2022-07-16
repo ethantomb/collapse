@@ -50,10 +50,10 @@ function loadImages() {
     ims[5].src = "img/StoW.png";
     ims[6].src = "img/WtoN.png";
     ims[7].src = "img/QUAD.png";
-    ims[8].src = "img/TNORTH.png";
-    ims[9].src = "img/TEAST.png";
-    ims[10].src = "img/TSOUTH.png";
-    ims[11].src = "img/TWEST.png";
+    ims[8].src = "img/TNorth.png";
+    ims[9].src = "img/TEast.png";
+    ims[10].src = "img/TSouth.png";
+    ims[11].src = "img/TWest.png";
 
 
 }
