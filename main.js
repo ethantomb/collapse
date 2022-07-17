@@ -43,13 +43,13 @@ function loadImages() {
     }
 
     ims[0].src = "img/BLANK.png";
-    ims[1].src = "img/HORIZ.png";
-    ims[2].src = "img/VERT.png";
+    ims[1].src = "img/HORIZROAD.png";
+    ims[2].src = "img/VERTROAD.png";
     ims[3].src = "img/NtoE.png";
     ims[4].src = "img/EtoS.png";
     ims[5].src = "img/StoW.png";
     ims[6].src = "img/WtoN.png";
-    ims[7].src = "img/QUAD.png";
+    ims[7].src = "img/QUADROAD.png";
     ims[8].src = "img/TNorth.png";
     ims[9].src = "img/TEast.png";
     ims[10].src = "img/TSouth.png";
