@@ -41,19 +41,22 @@ function loadImages() {
     for (let i = 0; i < 12; i++) {
         ims.push(new Image());
     }
-
-    ims[0].src = "img/BLANK.png";
-    ims[1].src = "img/HORIZROAD.png";
-    ims[2].src = "img/VERTROAD.png";
-    ims[3].src = "img/NtoE.png";
-    ims[4].src = "img/EtoS.png";
-    ims[5].src = "img/StoW.png";
-    ims[6].src = "img/WtoN.png";
-    ims[7].src = "img/QUADROAD.png";
-    ims[8].src = "img/TNorth.png";
-    ims[9].src = "img/TEast.png";
-    ims[10].src = "img/TSouth.png";
-    ims[11].src = "img/TWest.png";
+    var suffix = "ROAD.png";
+    if(document.querySelector(".useOG").checked){
+        suffix=".png";
+    }
+    ims[0].src = "img/BLANK"+suffix;
+    ims[1].src = "img/HORIZ"+suffix;
+    ims[2].src = "img/VERT"+suffix;
+    ims[3].src = "img/NtoE"+suffix;
+    ims[4].src = "img/EtoS"+suffix;
+    ims[5].src = "img/StoW"+suffix;
+    ims[6].src = "img/WtoN"+suffix;
+    ims[7].src = "img/QUAD"+suffix;
+    ims[8].src = "img/TNorth"+suffix;
+    ims[9].src = "img/TEast"+suffix;
+    ims[10].src = "img/TSouth"+suffix;
+    ims[11].src = "img/TWest"+suffix;
 
 
 }
@@ -181,12 +184,19 @@ function collapse() {
         }
     }
 }
+var addSquareCalled=false;
+//TODO: Implement
+function addSquare(pos,type){
+    addSquareCalled=true;
+}
 function main() {
     DIM = document.getElementById("dim").value;
     //Check if dim is defined
+    
     if (DIM == "") {
         DIM = 16;
     }
+    if(!addSquareCalled){
     grid=[];
     makeGrid();
     loadImages();
@@ -194,7 +204,7 @@ function main() {
     grid[3][3] = q
 
     draw(q);
-
+}
     while (!solved()) {
         collapse()
         let nextC = leastEntropy();
@@ -207,6 +217,7 @@ function main() {
         //console.table(grid[nextC[0]][nextC[1]])
         draw(grid[nextC[0]][nextC[1]]);
     }
+    
 
 }
 function mainloop() {
