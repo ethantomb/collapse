@@ -8,6 +8,5 @@ As an example, here are some images from a tileset that I created
 ![NtoEROAD.png](https://github.com/ethantomb/wave-function-collapse/blob/main/img/NtoEROAD.png)
 ![TNorthROAD.png](https://github.com/ethantomb/wave-function-collapse/blob/main/img/TNorthROAD.png)
 When put together, they create an aestetically pleasing composite image that looks like this.
-![Composite.png](https://github.com/ethantomb/wave-function-collapse/blob/main/img/Composite.png)
-__
+![Composite.png](https://github.com/ethantomb/wave-function-collapse/blob/main/img/Composite.png)<br />
 You are more than welcome to fork this repository and add your own touches to it, and if you wanted to make your own tilesets, follow [these guidelines](https://ethantomb.github.io/wave-function-collapse/tilesets.html) and send them my way on linkedin or twitter or through github. In fact, if you did this, it would genuinely make my day!
