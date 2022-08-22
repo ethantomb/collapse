@@ -67,11 +67,13 @@ body{
     
 }
 label{
+    background-color: rgb(0,0,0);
     color: white;
     font-weight:bold;
-    font-size:28px;
+    font-size:20px;
+    height: 40px;
     font-family: Arial, Helvetica, sans-serif;
-    padding:10px;
+    padding:5px;
 }
 .guiButton{
   background: rgb(63,94,251);
@@ -83,20 +85,35 @@ label{
 .guiButton:enabled{
   color:black;
 }
+.guiButton:disabled{
+  background: rgb(220, 225, 255);
+  background: radial-gradient(circle, rgba(214, 218, 236,1) 0%,rgba(221, 39, 76,1) 100%);
+  
+}
+.guiButton:hover{
+  background: rgb(252,70,107);
+  background: radial-gradient(circle, rgba(252,70,107,1) 0%, rgba(63,94,251,1) 100%);
+  
+}
+.guiButton:active{
+  background: rgb(252,70,107);
+  
+}
 input[type="checkbox"]{
-    width:28px;
-    height:28px;
+    width:40px;
+    height:40px;
 }
 input[type="text"]{
     width:200px;
-    height:28px;
+    height:40px;
 }
 .heading{
   background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+  background: linear-gradient(0deg, rgb(124, 113, 243) 0%,rgba(87, 87, 149,1) 35%, rgba(223, 225, 233,1) 100%);
     font-family: Arial, Helvetica, sans-serif;
-    color:rgb(236, 175, 175);
+    color:rgb(38, 0, 0);
     font-weight:bold;
+    width:100%
 }
 a{
     background-color: rgb(237, 180, 119);
@@ -122,4 +139,9 @@ a:hover{
 td>img{
     width:100px;
     height:100px;
+}
+#dim{
+  width: 60px;
+  height: 40px;
+  font-size: 20px;
 }

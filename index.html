@@ -27,10 +27,18 @@
         </div>
         <label for="dim">Grid Size:</label>
         <input type="number" id="dim" name="dim"><br><br>
+        <label for="loadData">(Optional) Load from matrix</label>
+        <input type="text" id="loadData">
+        <button onclick = "document.getElementById('loadData').value = ''" id="clearBtn" class="GUIButton">Clear</button>
+        <br><br>
         <label for="useOG">Use OG Texture?</label>
         <input type = "checkbox" id="useOG" class="useOG"><br><br>
+        <label for="Toggle Step Mode">Toggle Animation Delay</label>
+        <input type = "checkbox" id="delay" class="delay"><br><br>
+        <labe id="gridDat"></label>
         <button onclick="gen()" id="generateBtn" class="GUIButton">Generate Grid</button>
         <button onclick="solve()" id="solveBtn" class="GUIButton" disabled=true>Solve</button>
+        <button onclick = "copy()" id="copyBtn" class="GUIButton">Copy</button>
         <br><br>
         <div id="addSquareModal" class="modal"> 
             <div class="modal-content">

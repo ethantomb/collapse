@@ -1,6 +1,7 @@
 
 const w = 1600, h = w;
 var DIM = 16;
+
 //Grid is a 2-dimmensional array of tiles.
 var grid = [];
 //ims is an array of each of the image objects. It is filled in the function loadImages() which is called when the Generate Grid button is pressed
@@ -46,6 +47,10 @@ const RULES = [
     [[2, 4, 5, 7, 9, 10, 11], [1, 5, 6, 7, 8, 10, 11], [2, 3, 6, 7, 8, 9, 11], [0, 2, 5, 6, 11]],
     [[0, 1, 3, 6, 8], [1, 5, 6, 7, 8, 10, 11], [2, 3, 6, 7, 8, 9, 11], [1, 3, 4, 7, 8, 9, 10]],
     [[2, 4, 5, 7, 9, 10, 11], [0, 2, 3, 4, 9], [2, 3, 6, 7, 8, 9, 11], [1, 3, 4, 7, 8, 9, 10]]];
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 /**
  * Initializes ims array using road files from ./img 
  */
@@ -160,10 +165,114 @@ function leastEntropy() {
 
 }
 /**
+ * Returns the grid state as a matrix with entries in [-1](unsolved) U [0,11](solved)
+ */
+function toMatrix(){
+    let matrix=[];
+    
+    if(grid.length!=0){
+        for(let i=0;i<grid.length;i++){
+            matrix.push([])
+        }
+        console.table(matrix)
+        for(let i=0;i<grid.length;i++){
+            for(let j=0;j<grid.length;j++){
+                if(grid[i][j].collapsed){
+                    matrix[i][j]= grid[i][j].options[0];
+                }else{
+                    matrix[i][j]=-1;
+                }
+            }
+        }
+    }
+    return matrix;
+}
+function toggleSolveButton(){
+    if(document.querySelector("#step").checked){
+        document.getElementById("solveBtn").innerHTML="Step";
+    }else{
+        document.getElementById("solveBtn").innerHTML="Solve";
+    }
+}
+async function copy(){
+    let copyData = toMatrix();
+    let encodedData = ""
+    for(let i=0;i<copyData.length;i++){
+        encodedData+=" ";
+        for(let j=0;j<copyData.length;j++){
+            encodedData+=copyData[i][j]+" ";
+        }
+        encodedData+="x";
+    }
+    encodedData+="f";
+    navigator.clipboard.writeText(encodedData).then(function() {
+        //On success, make the button say "Copied", make it inactive and wait for 2 seconds, then make it say "Copy" and make it active again
+        document.getElementById("copyBtn").innerHTML="Copied";
+        document.getElementById("copyBtn").disabled=true;
+        setTimeout(function(){
+            document.getElementById("copyBtn").innerHTML="Copy";
+            document.getElementById("copyBtn").disabled=false;
+        },2000);
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+}
+
+/**
+ * Generates a grid from a matrix
+ * @param {string} m - the encoded data
+ */
+function fromEncoded(m){
+    let matrix=[];
+    let row = [];
+    let r=0,c=0;
+    
+    m=m.split(" ");
+    for(let k=1;k<m.length;k++){
+        if(m[k]=="x"){
+            r=0;
+            
+            matrix.push(row);
+            row=[];
+        }else if(m[k]!="xf"){
+            
+            row.push(parseInt(m[k]));
+        }else if(m[k]=="xf"){
+            matrix.push(row);
+            break;
+        }
+    }
+    console.table(matrix);
+    newGrid=[]
+    if(matrix.length>0){
+            if(matrix[0].length==matrix.length){
+                console.log("Matrix is square"+matrix[0].length==matrix.length);
+                for(let i=0;i<matrix.length;i++){
+                    newGrid.push([]);
+                    for(let j=0;j<matrix.length;j++){
+                        if(matrix[i][j]==-1){
+                            newGrid[i][j]=new tile(false,[0,1,2,3,4,5,6,7,8,9,10,11],[i,j]);
+                        }else if(matrix[i][j]==parseInt(matrix[i][j]) && matrix[i][j]>=0 &&matrix[i][j]<12 ){
+                            newGrid[i][j]=new tile(true,[matrix[i][j]],[i,j])
+                        }else{
+                            
+                        }
+                    }
+                }
+                return newGrid;
+            }
+        }
+    
+    
+}
+
+/**
  * Evaluates availible options for each square in the grid by checking the rules of its neighboring squares. 
  */
 function collapse() {
+
     for (let i = 0; i < DIM; i++) {
+        
         for (let j = 0; j < DIM; j++) {
             if (grid[i][j].options.length == 0) {
                 grid[i][j].collapsed = false;
@@ -172,6 +281,7 @@ function collapse() {
              * If the square is collapsed, change the options of the neighboring squares to match those allowed by the rules
              */
             if (grid[i][j].collapsed) {
+                
                 let tileType = grid[i][j].options[0];
                 //Check North Rules against North neighbor
                 if (j > 0) {
@@ -228,12 +338,47 @@ function collapse() {
     }
 }
 
+/**
+ * Loads a new grid from a matrix
+ * @param {nxn matrix} m
+ */
+function load(m){
+    loadImages();
+    newGrid = fromEncoded(m)
+    grid=newGrid;
+    DIM = grid.length;
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    for (let i = 0; i < DIM; i++) {
+        for (let j = 0; j < DIM; j++) {
+            if(grid[i][j].collapsed){
+                draw(grid[i][j]);
+            }else{
+            if ((i + j) % 2 == 0) {
+                ctx.fillStyle = `rgb(14, 61, 138)`;
+            } else {
+                ctx.fillStyle = `rgb(54, 60, 71)`;
+            }
+            ctx.fillRect(i * w / DIM, j * w / DIM, w / DIM, w / DIM);
+        }
+        }
+    }
+    document.querySelector("#solveBtn").disabled = false;
+    for (let i = 0; i < 12; i++) {
+        document.querySelector("#im" + i).src = ims[i].src;
+    }
+}
 
 /**
  * Resets and generates the starting board
  */
 function gen() {
-    
+    if(document.getElementById("loadData").value!=""){
+        
+        load(document.getElementById("loadData").value);
+        
+    }else{
+
     DIM = document.getElementById("dim").value;
     //Check if dim is defined or is equal to 0. Sets DIM to default value of 16.
 
@@ -244,7 +389,9 @@ function gen() {
     //Set grid to initial unsolved state. 
 
     makeGrid();
+
     loadImages();
+}
     /*
     const q = new tile(true, [1], [0, 0]);
     grid[0][0] = q
@@ -257,6 +404,8 @@ collapse();
     for (let i = 0; i < 12; i++) {
         document.querySelector("#im" + i).src = ims[i].src;
     }
+    
+
 }
 
 
@@ -313,8 +462,9 @@ function addSquare(canvas, event) {
 function processModal(n) {
     if (n != -1) {
         const selectedTile = new tile(true, [n], [choiceI, choiceJ]);
+        
         grid[choiceI][choiceJ] = selectedTile;
-
+        
         draw(selectedTile);
         collapse();
     }
@@ -323,11 +473,14 @@ function processModal(n) {
 /**
  * Solves the starting board. Requires Generate Grid to have been clicked.
  */
-function solve() {
+async function solve() {
     
     /**
      * Keep looping until the canvas is solved
      */
+   
+
+    
     document.getElementById("solveBtn").innerHTML="Solving...";
     document.querySelector("#solveBtn").disabled = true;
     while (!solved()) {
@@ -341,9 +494,12 @@ function solve() {
         grid[nextC[0]][nextC[1]].collapsed = true;
         //console.table(grid[nextC[0]][nextC[1]])
         draw(grid[nextC[0]][nextC[1]]);
+        //Wait for 0.01 seconds
+        if(document.querySelector("#delay").checked){
+        await sleep(10);
+        }
     }
-    document.getElementById("solveBtn").innerHTML="Solve";
-    
+    document.getElementById("solveBtn").innerHTML="Solve";    
 }
 /**
  * Initialization function for the canvas. adds event listener to the canvas. 
