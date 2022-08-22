@@ -51,6 +51,8 @@ const RULES = [
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
 /**
  * Initializes ims array using road files from ./img 
  */

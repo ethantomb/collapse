@@ -1,152 +1,204 @@
+a {
+  background-color: rgb(237, 180, 119);
+  color: rgb(187, 7, 7);
+}
 
-body{
-    background-image: url("img/Background.jpg");
+a:hover {
+  background-color: #888;
+}
+
+
+
+body {
+  background-image: url("img/Background.jpg");
   padding: 0;
   margin: 0;
-
+  background-size: cover;
 }
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+.body-displaybox {
+  background-color: rgb(2, 0, 36);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(212, 212, 212);
+  font-weight: bold;
+  width: auto;
+  min-width: 1600px;
   
-  /* Modal Content/Box */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
-  .modal-content>button {
-    display: inline-block;
-    width: 110px; 
-    height: 110px; 
-    text-align: center;
-    border: gray;
-    background-color: #E8562A;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  .modal-content>button>img{
-    width: 100px;
-    height: 100px;
-  }
-  .modal-content>button:disabled {
-    display: inline-block;
-    width: 110px; 
-    height: 110px; 
-    text-align: center;
-    border: gray;
-    background-color: gray;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  .modal-content>button:disabled>img {
-    filter: grayscale(100%);
-  }
-  
+}
+.clearBtn{
+  width: 125px;
+  height: 35px;
+  font-weight: bold;
+}
 /* The Close Button */
 .close {
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-label{
-    background-color: rgb(0,0,0);
-    color: white;
-    font-weight:bold;
-    font-size:20px;
-    height: 40px;
-    font-family: Arial, Helvetica, sans-serif;
-    padding:5px;
-}
-.guiButton{
-  background: rgb(63,94,251);
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-    
-    padding:10px;
-    font-size:20px;
-}
-.guiButton:enabled{
-  color:black;
-}
-.guiButton:disabled{
-  background: rgb(220, 225, 255);
-  background: radial-gradient(circle, rgba(214, 218, 236,1) 0%,rgba(221, 39, 76,1) 100%);
-  
-}
-.guiButton:hover{
-  background: rgb(251, 245, 246);
-  background: radial-gradient(circle, rgba(252,70,107,1) 0%, rgba(63,94,251,1) 100%);
-  
-}
-.guiButton:active{
-  background: rgb(252,70,107);
-  
-}
-input[type="checkbox"]{
-    width:40px;
-    height:40px;
-}
-input[type="text"]{
-    width:200px;
-    height:40px;
-}
-.heading{
-  background: rgb(2,0,36);
-  background: linear-gradient(0deg, rgb(124, 113, 243) 0%,rgba(87, 87, 149,1) 35%, rgba(223, 225, 233,1) 100%);
-    font-family: Arial, Helvetica, sans-serif;
-    color:rgb(38, 0, 0);
-    font-weight:bold;
-
-    width:auto;
-}
-a{
-    background-color: rgb(237, 180, 119);
-    color:rgb(187, 7, 7);
-}
-a:hover{
-    background-color:#888;
-}
-.body{
-    background-color: rgb(2,0,36);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    font-family: Arial, Helvetica, sans-serif;
-    color:rgb(212, 212, 212);
-    font-weight:bold;
-}
-.images{
-  font-family: Arial, Helvetica, sans-serif;
-  color:rgb(212, 212, 212);
-  font-weight:bold;
-}
-td>img{
-    width:100px;
-    height:100px;
-}
-#dim{
+#dim {
   width: 60px;
   height: 40px;
   font-size: 20px;
+}
+.grid-options{
+  background-color:rgb(0, 0, 0);
+  width: 600px;
+  padding: 10px;
+}
+/*Align the inputs inside grid options to the right*/
+.grid-options input {
+  float: right;
+}
+.grid-options button{
+  float: right;
+}
+
+.guiButton {
+  background: rgb(63, 94, 251);
+  background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+  width: 25%;
+  height: 75px;
+  padding: 10px;
+
+  font-size: 35px;
+}
+
+.guiButton:enabled {
+  color: black;
+}
+
+.guiButton:disabled {
+  background: rgb(220, 225, 255);
+  background: radial-gradient(circle, rgba(214, 218, 236, 1) 0%, rgba(221, 39, 76, 1) 100%);
+
+}
+
+.guiButton:hover {
+  background: rgb(251, 245, 246);
+  background: radial-gradient(circle, rgba(252, 70, 107, 1) 0%, rgba(63, 94, 251, 1) 100%);
+
+}
+
+.guiButton:active {
+  background: rgb(252, 70, 107);
+
+}
+
+.heading {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(0deg, rgb(124, 113, 243) 0%, rgba(87, 87, 149, 1) 35%, rgba(223, 225, 233, 1) 100%);
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(38, 0, 0);
+  font-weight: bold;
+  width: auto;
+  min-width: 1600px;
+}
+.HeadingContent{
+  width: auto;
+}
+
+.images {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(212, 212, 212);
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  width: 40px;
+  height: 35px;
+}
+
+input[type="text"] {
+  width: 200px;
+  height: 35px;
+}
+
+label {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  height: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 5px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+
+.modal-content>button {
+  display: inline-block;
+  width: 110px;
+  height: 110px;
+  text-align: center;
+  border: gray;
+  background-color: #E8562A;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-content>button>img {
+  width: 100px;
+  height: 100px;
+}
+
+.modal-content>button:disabled {
+  display: inline-block;
+  width: 110px;
+  height: 110px;
+  text-align: center;
+  border: gray;
+  background-color: gray;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-content>button:disabled>img {
+  filter: grayscale(100%);
+}
+.show {display:block;}
+td>img {
+  width: 100px;
+  height: 100px;
 }

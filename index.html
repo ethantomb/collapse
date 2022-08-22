@@ -19,67 +19,72 @@
                     Repository</a>&emsp;&emsp;&emsp;<a href="https://www.linkedin.com/in/ethan-tomb/">My Linkedin</a>
             </h2>
 
-            <h3>Instructions</h3>
-            <div class="dropdown" title="Instructions">
-                <ol>
-                    <li>Change Grid Size to whatever you like. The load time grows exponentially, so I recomend a max of
-                        100. The default value is 16</li>
-                    <li>Click "Generate Grid" to preload the grid</li>
-                    <li>Fill in any square on the grid by clicking on it, then selecting an available option.</li>
-                    <li>Click "Solve" to start the Algorithm</li>
-                </ol>
-            </div>
+            <h2>Instructions</h2>
+            <ol>
+                <li>Change Grid Size to whatever you like. The load time grows exponentially, so I recomend a max of
+                    100. The default value is 16</li>
+                <li>Click "Generate Grid" to preload the grid</li>
+                <li>Fill in any square on the grid by clicking on it, then selecting an available option.</li>
+                <li>Click "Solve" to start the Algorithm</li>
+            </ol>
 
             <h2>Acknowledgements</h2>
-            <h3>Background Art: "Neon Lights" by <a href="https://kvacm.artstation.com/projects/B13O2l">Michal Kváč
-                    (artstation.com)</a></h3>
-            <h3>Favicon: "How to Create an Isometric Pixel Art Vehicle in Adobe Photoshop" by <a
-                    href="https://design.tutsplus.com/tutorials/how-to-create-an-isometric-pixel-art-vehicle-in-adobe-photoshop--cms-22550">René
-                    Alejandro Hernández
-                    (tutsplus.com) </a></h3>
-            <h3>I'm admitedly not the best artist. If you're interested in making my day, feel free to create your own
-                <a href="tilesets.html">tilesets(tileset specifications)</a>and send me a DM on twitter at @ethantomb25
-            </h3>
+            <ul>
+                <li>Background Art: "Neon Lights" by <a href="https://kvacm.artstation.com/projects/B13O2l">Michal Kváč
+                        (artstation.com)</a></li>
+                <li>Favicon: "How to Create an Isometric Pixel Art Vehicle in Adobe Photoshop" by <a
+                        href="https://design.tutsplus.com/tutorials/how-to-create-an-isometric-pixel-art-vehicle-in-adobe-photoshop--cms-22550">René
+                        Alejandro Hernández
+                        (tutsplus.com) </a></li>
+                <li>I'm admitedly not the best artist. If you're interested in making my day, feel free to create your
+                    own
+                    <a href="tilesets.html">tilesets(tileset specifications)</a>and send me a DM on twitter at
+                    @ethantomb25
+                </li>
+            </ul>
+
+
+
         </div>
 
     </div>
-    <label for="dim">Grid Size:</label>
-    <input type="number" id="dim" name="dim"><br><br>
-    <label for="loadData">(Optional) Load from matrix</label>
-    <input type="text" id="loadData">
-    <button onclick="document.getElementById('loadData').value = ''" id="clearBtn" class="GUIButton">Clear</button>
-    <br><br>
-    <label for="useOG">Use OG Texture?</label>
-    <input type="checkbox" id="useOG" class="useOG"><br><br>
-    <label for="Toggle Step Mode">Toggle Animation Delay</label>
-    <input type="checkbox" id="delay" class="delay"><br><br>
-    <labe id="gridDat"></label>
-        <button onclick="gen()" id="generateBtn" class="GUIButton">Generate Grid</button>
-        <button onclick="solve()" id="solveBtn" class="GUIButton" disabled=true>Solve</button>
-        <button onclick="copy()" id="copyBtn" class="GUIButton">Copy</button>
+    <div class="grid-options">
+        <label for="dim">Grid Size:</label>
+        <input type="number" id="dim" name="dim"><br><br>
+        <label for="loadData">(Optional) Load from matrix</label>
+        <input type="text" id="loadData"><br><br>
+        <button onclick="document.getElementById('loadData').value = ''" id="clearBtn" class="clearBtn">Clear</button>
         <br><br>
-        <div id="addSquareModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="Close" onclick="processModal(-1)">&times;</span>
-                <h2>Add Square</h2>
-                <button disabled=true id="t0" onclick="processModal(0)"><img id="im0" src="img/BLANKROAD.png"></button>
-                <button disabled=true id="t1" onclick="processModal(1)"><img id="im1" src="img/HORIZROAD.png"></button>
-                <button disabled=true id="t2" onclick="processModal(2)"><img id="im2" src="img/VERTROAD.png"></button>
-                <button disabled=true id="t3" onclick="processModal(3)"><img id="im3" src="img/NtoEROAD.png"></button>
-                <button disabled=true id="t4" onclick="processModal(4)"><img id="im4" src="img/EtoSROAD.png"></button>
-                <button disabled=true id="t5" onclick="processModal(5)"><img id="im5" src="img/StoWROAD.png"></button>
-                <button disabled=true id="t6" onclick="processModal(6)"><img id="im6" src="img/WtoNROAD.png"></button>
-                <button disabled=true id="t7" onclick="processModal(7)"><img id="im7" src="img/QUADROAD.png"></button>
-                <button disabled=true id="t8" onclick="processModal(8)"><img id="im8" src="img/TNorthROAD.png"></button>
-                <button disabled=true id="t9" onclick="processModal(9)"><img id="im9" src="img/TEastROAD.png"></button>
-                <button disabled=true id="t10" onclick="processModal(10)"><img id="im10"
-                        src="img/TSouthROAD.png"></button>
-                <button disabled=true id="t11" onclick="processModal(11)"><img id="im11"
-                        src="img/TWestROAD.png"></button>
-            </div>
+        <label for="useOG">Use OG Texture?</label>
+        <input type="checkbox" id="useOG" class="useOG"><br><br>
+        <label for="Toggle Step Mode">Toggle Animation Delay</label>
+        <input type="checkbox" id="delay" class="delay"><br><br>
+    </div>
 
+    <button onclick="gen()" id="generateBtn" class="GUIButton">Generate Grid</button>
+    <button onclick="solve()" id="solveBtn" class="GUIButton" disabled=true>Solve</button>
+    <button onclick="copy()" id="copyBtn" class="GUIButton">Copy</button>
+    <br><br>
+    <div id="addSquareModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="Close" onclick="processModal(-1)">&times;</span>
+            <h2>Add Square</h2>
+            <button disabled=true id="t0" onclick="processModal(0)"><img id="im0" src="img/BLANKROAD.png"></button>
+            <button disabled=true id="t1" onclick="processModal(1)"><img id="im1" src="img/HORIZROAD.png"></button>
+            <button disabled=true id="t2" onclick="processModal(2)"><img id="im2" src="img/VERTROAD.png"></button>
+            <button disabled=true id="t3" onclick="processModal(3)"><img id="im3" src="img/NtoEROAD.png"></button>
+            <button disabled=true id="t4" onclick="processModal(4)"><img id="im4" src="img/EtoSROAD.png"></button>
+            <button disabled=true id="t5" onclick="processModal(5)"><img id="im5" src="img/StoWROAD.png"></button>
+            <button disabled=true id="t6" onclick="processModal(6)"><img id="im6" src="img/WtoNROAD.png"></button>
+            <button disabled=true id="t7" onclick="processModal(7)"><img id="im7" src="img/QUADROAD.png"></button>
+            <button disabled=true id="t8" onclick="processModal(8)"><img id="im8" src="img/TNorthROAD.png"></button>
+            <button disabled=true id="t9" onclick="processModal(9)"><img id="im9" src="img/TEastROAD.png"></button>
+            <button disabled=true id="t10" onclick="processModal(10)"><img id="im10" src="img/TSouthROAD.png"></button>
+            <button disabled=true id="t11" onclick="processModal(11)"><img id="im11" src="img/TWestROAD.png"></button>
         </div>
-        <canvas id="canvas" width="1600" height="1600" style="border:1px solid #d3d3d3;"></canvas>
+
+    </div>
+    <canvas id="canvas" width="1600" height="1600" style="border:1px solid #d3d3d3;"></canvas>
 </body>
 
 </html>
