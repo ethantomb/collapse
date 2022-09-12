@@ -1,6 +1,9 @@
-
-const w = 1600, h = w;
-var DIM = 16;
+//Wave Function Collapse Algorithm
+//TODO:
+//Keep sprite resolution while zooming in
+var w = 1600, h = w;
+var DIMX = 16,DIMY=16;
+var winW,winH;
 
 //Grid is a 2-dimmensional array of tiles.
 var grid = [];
@@ -11,11 +14,11 @@ var ims = [];
  */
 class tile {
     /**
-     * Tile constructor. Creates a tile that is not collapsed
+     * Initialize a tile object
      * @param {boolean} collapsed - True if tile is collapsed, false if tile is not collapsed
      * @param {Array<int>} options - The possible states for the tile indexed [0-11] 
      *      corresponding to [Blank,Horiz,Vert,NtoE Turn,EtoS Turn,StoW Turn,WtoN Turn,Quad Junction,T-Junct North,T-Junct East,T-Junct South,T-Junct West]
-     * @param {*} index - The index where the tile is located
+     * @param {*} index - The index where the tile is located, from (0,0) Top Left to (width-1,height-1) Bot Right
      */
     constructor(collapsed, options, index) {
 
@@ -81,27 +84,28 @@ function loadImages() {
     ims[11].src = "img/TWest" + suffix;
 }
 /**
- * Initializes the grid. Sets tiles from index [0,0] to [DIM,DIM] to uncollapsed with all available options
+ * Initializes the grid. Sets tiles from index [0,0] to [DIMX,DIMX] to uncollapsed with all available options
  * Draws a checkered pattern on the canvas so user can easily differentiate between adjacent tiles
  */
 function makeGrid() {
     grid = [];
-    for (let i = 0; i < DIM; i++) {
+    for (let i = 0; i < DIMX; i++) {
         grid.push([]);
     }
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
-    for (let i = 0; i < DIM; i++) {
-        for (let j = 0; j < DIM; j++) {
+    for (let i = 0; i < DIMX; i++) {
+        for (let j = 0; j < DIMY; j++) {
             grid[i].push(new tile(false, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], [i, j]));
             if ((i + j) % 2 == 0) {
                 ctx.fillStyle = `rgb(14, 61, 138)`;
             } else {
                 ctx.fillStyle = `rgb(54, 60, 71)`;
             }
-            ctx.fillRect(i * w / DIM, j * w / DIM, w / DIM, w / DIM);
+            ctx.fillRect(i * w / DIMX, j * h / DIMY, w / DIMX+1, h / DIMY+1);
         }
     }
+    console.table(grid);
 }
 /**
  * Fills in a square on the board
@@ -116,9 +120,9 @@ function draw(square) {
     let im = new Image();
     im.src = imsrc;
 
-
+    
     im.onload = function () {
-        ctx.drawImage(ims[square.options[0]], square.index[0] * w / DIM, square.index[1] * w / DIM, w / DIM, h / DIM);
+        ctx.drawImage(ims[square.options[0]], square.index[0] * w / DIMX, square.index[1] * h / DIMY, w / DIMX, h / DIMY);
     }
 }
 /**
@@ -126,8 +130,8 @@ function draw(square) {
  * @returns {boolean} True if solved, False if not solved
  */
 function solved() {
-    for (let i = 0; i < DIM; i++) {
-        for (let j = 0; j < DIM; j++) {
+    for (let i = 0; i < DIMX; i++) {
+        for (let j = 0; j < DIMY; j++) {
             if (!grid[i][j].collapsed) {
                 return false;
             }
@@ -144,10 +148,10 @@ function leastEntropy() {
      * First pass, check all tiles to determine the minimum entrophy, or minimum length of options array
      */
     let minlen = NUM_CHOICES;
-    for (let i = 0; i < DIM; i++) {
-        for (let j = 0; j < DIM; j++) {
+    for (let i = 0; i < DIMX; i++) {
+        for (let j = 0; j < DIMY; j++) {
             if (grid[i][j].options.length < minlen && !grid[i][j].collapsed && grid[i][j].options.length > 0) {
-                minlen = grid[i][j].options.length
+                minlen = grid[i][j].options.length;
             }
         }
     }
@@ -155,8 +159,8 @@ function leastEntropy() {
      * Second pass, add indecies of all tiles with minimum entrophy to a list
      */
     options = []
-    for (let i = 0; i < DIM; i++) {
-        for (let j = 0; j < DIM; j++) {
+    for (let i = 0; i < DIMX; i++) {
+        for (let j = 0; j < DIMY; j++) {
             if (grid[i][j].options.length == minlen && !grid[i][j].collapsed) {
                 options.push(grid[i][j].index)
             }
@@ -196,6 +200,9 @@ function toggleSolveButton(){
         document.getElementById("solveBtn").innerHTML="Solve";
     }
 }
+/**
+ * Resolved the current grid as an encoded string, and coppies it to the clipboard
+ */
 async function copy(){
     let copyData = toMatrix();
     let encodedData = ""
@@ -216,19 +223,20 @@ async function copy(){
             document.getElementById("copyBtn").disabled=false;
         },2000);
       }, function(err) {
+        alert("Error copying to clipboard");
         console.error('Async: Could not copy text: ', err);
       });
 }
 
 /**
  * Generates a grid from a matrix
+ * The is sent as an encoded string with each row separated by "x" and each column separated by " ". "xf" is the end of the string
+ * The digits in the string are the ID's of the tiles to be drawn, with -1 representing an unsolved tile and 0-11 representing solved tiles
  * @param {string} m - the encoded data
  */
 function fromEncoded(m){
     let matrix=[];
     let row = [];
-    let r=0,c=0;
-    
     m=m.split(" ");
     for(let k=1;k<m.length;k++){
         if(m[k]=="x"){
@@ -273,9 +281,9 @@ function fromEncoded(m){
  */
 function collapse() {
 
-    for (let i = 0; i < DIM; i++) {
+    for (let i = 0; i < DIMX; i++) {
         
-        for (let j = 0; j < DIM; j++) {
+        for (let j = 0; j < DIMY; j++) {
             if (grid[i][j].options.length == 0) {
                 grid[i][j].collapsed = false;
             }
@@ -303,7 +311,7 @@ function collapse() {
 
                 }
                 //Check East rules against East neighbor
-                if (i < DIM - 1) {
+                if (i < DIMX - 1) {
                     for (let k = 0; k < grid[i + 1][j].options.length; k++) {
                         if (!RULES[tileType][1].includes(grid[i + 1][j].options[k])) {
                             grid[i + 1][j].options.splice(k, 1);
@@ -314,7 +322,7 @@ function collapse() {
 
                 }
                 //Check South rules against South neighbor
-                if (j < DIM - 1) {
+                if (j < DIMY - 1) {
                     for (let k = 0; k < grid[i][j + 1].options.length; k++) {
                         if (!RULES[tileType][2].includes(grid[i][j + 1].options[k])) {
                             grid[i][j + 1].options.splice(k, 1);
@@ -348,11 +356,11 @@ function load(m){
     loadImages();
     newGrid = fromEncoded(m)
     grid=newGrid;
-    DIM = grid.length;
+    DIMX = grid.length;
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
-    for (let i = 0; i < DIM; i++) {
-        for (let j = 0; j < DIM; j++) {
+    for (let i = 0; i < DIMX; i++) {
+        for (let j = 0; j < DIMY; j++) {
             if(grid[i][j].collapsed){
                 draw(grid[i][j]);
             }else{
@@ -361,7 +369,7 @@ function load(m){
             } else {
                 ctx.fillStyle = `rgb(54, 60, 71)`;
             }
-            ctx.fillRect(i * w / DIM, j * w / DIM, w / DIM, w / DIM);
+            ctx.fillRect(i * w / DIMX, j * h / DIMY, w / DIMX, h / DIMY);
         }
         }
     }
@@ -375,19 +383,29 @@ function load(m){
  * Resets and generates the starting board
  */
 function gen() {
+    w = window.innerWidth-30;
+    h = w;
+
     if(document.getElementById("loadData").value!=""){
         
         load(document.getElementById("loadData").value);
         
     }else{
 
-    DIM = document.getElementById("dim").value;
-    //Check if dim is defined or is equal to 0. Sets DIM to default value of 16.
+    DIMX = document.getElementById("dimX").value;
+    DIMY = document.getElementById("dimY").value;
+    //Check if dim is defined or is equal to 0. Sets DIMX to default value of 16.
 
-    if (DIM == "" || DIM == 0) {
+    if (DIMX == "" || DIMX == 0) {
         
-        DIM = 16;
+        DIMX = 16;
     }
+    if(DIMY == ""||DIMY==0){
+        DIMY=DIMX;
+    }
+    h=(w/DIMX)*DIMY;
+    document.getElementById("canvas").width=w;
+    document.getElementById("canvas").height=h;
     //Set grid to initial unsolved state. 
 
     makeGrid();
@@ -419,25 +437,29 @@ var choiceI, choiceJ;
 function addSquare(canvas, event) {
     
     if (!document.querySelector("#solveBtn").disabled) {
-        let n = DIM;
-        let l = 1600;
+        
+        
         let rect = canvas.getBoundingClientRect();
         let x = event.clientX - rect.left;
         let y = event.clientY - rect.top;
         //Cap x and y below 1600 so math works. 
-        if (x >= 1600) {
-            x = 1590;
+        if (x >= w) {
+            x = w-10;
         }
-        if (y >= 1600) {
-            y = 1590;
+        if (y >= h) {
+            y = h-10;
         }
 
-        choiceI = Math.floor(x * (n / l));
-        choiceJ = Math.floor(y * (n / l));
+        choiceI = Math.floor(x * (DIMX / w));
+        choiceJ = Math.floor(y * (DIMY / h));
 
         
         //Check if clicked tile is collapsed. 
         if (!grid[choiceI][choiceJ].collapsed) {
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+            ctx.fillStyle = `rgb(214, 37, 21)`;
+            ctx.fillRect(choiceI * w / DIMX+((w / DIMX)/4), choiceJ * h / DIMY+((h / DIMY)/4), w / (2*DIMX), h / (2*DIMY));
             //If road choice button is valid according to ruleset, enable button. 
             for (let s = 0; s < NUM_CHOICES; s++) {
                 if (grid[choiceI][choiceJ].options.includes(s)) {
@@ -469,6 +491,14 @@ function processModal(n) {
         
         draw(selectedTile);
         collapse();
+    }else{
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+        if((choiceI+choiceJ)%2==0){
+            ctx.fillStyle = `rgb(14, 61, 138)`;
+        }else{  ctx.fillStyle = `rgb(54, 60, 71)`;
+        }
+        ctx.fillRect(choiceI * w / DIMX, choiceJ * h / DIMY, w / DIMX, h / DIMY);
     }
     document.getElementById("addSquareModal").style.display = "none";
 }
