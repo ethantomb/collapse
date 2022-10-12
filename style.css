@@ -6,8 +6,17 @@ a {
 a:hover {
   background-color: #888;
 }
-
-
+.headingContent>h1{
+  text-align: center;
+}
+.headingContent>h3{
+  text-align: center;
+}
+.info{
+  padding:5px;
+  border: 3px solid #E8562A;
+  border-radius:5px;
+}
 
 body {
   background-image: url("img/Background.jpg");
@@ -206,12 +215,18 @@ td>img {
   height: 100px;
 }
 canvas{
-  
-  margin-left:7px;
+    display:block;
+    outline:none;
+    border:none;
 
     image-rendering: optimizeQuality;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
+}
+.boxUsedToCenterCanvasOnScreenOnMobileDevices{
+  display:flex;
+  align-items:center;
+  justify-content: center;
 }

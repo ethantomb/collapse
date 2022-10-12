@@ -22,34 +22,48 @@
     <div class="Heading">
         <div class="HeadingContent">
 
-            <h1>A Wave Function Collapse Algorithm</h1>
-            <h3>Created by Ethan Tomb as a personal project.</h3>
-            <h2><a href="https://github.com/ethantomb/collapse">The Github
-                    Repository</a>&emsp;&emsp;&emsp;<a href="https://ethantomb.github.io">My Other Projects</a></h2>
-            </h2>
-<div style="display:none;">
-            <h2>Instructions</h2>
-            <ol>
-                <li>Change Grid Size to whatever you like. The load time grows exponentially, so I recomend a max of
-                    100. The default value is 16</li>
-                <li>Click "Generate Grid" to preload the grid</li>
-                <li>Fill in any square on the grid by clicking on it, then selecting an available option.</li>
-                <li>Click "Solve" to start the Algorithm</li>
-            </ol>
+            <h1>Winding Roads</h1>
+            <h3>A Wave-Function Collapse Experiment</h3>
+            <div class="info">
+                <p>Created by Ethan Tomb as a personal project. For a great explanation of this algorithm, check out The Coding Train's <a href="https://www.youtube.com/watch?v=rI_y2GAlQFM">Video</a> on youtube. Desktop is recommended for an optimal experience.<br>Instructions:
+                <ol>
+                    <li>Set a size and click "Generate Grid". If you want to watch the algorithm do it's thing, check "Animation Delay"</li>
+                    <li>Tap any square on the
+                        grid to chose a tile for it.</li>
+                    <li>Hit "Solve" to... solve</li>
+                </ol>
+                Check my other work out <a href="https://ethantomb.github.io" target="_blank">here!</a><br>
+                The <a href="https://github.com/ethantomb/collapse" target="_blank">Source Code</a> is on github.
 
-            <h2>Acknowledgements</h2>
-            <ul>
-                <li>Background Art: "Neon Lights" by <a href="https://kvacm.artstation.com/projects/B13O2l">Michal Kváč
-                        (artstation.com)</a></li>
-                <li>Favicon: "How to Create an Isometric Pixel Art Vehicle in Adobe Photoshop" by <a
-                        href="https://design.tutsplus.com/tutorials/how-to-create-an-isometric-pixel-art-vehicle-in-adobe-photoshop--cms-22550">René
-                        Alejandro Hernández
-                        (tutsplus.com) </a></li>
-                <li>I'm admitedly not the best artist. If you're interested in making my day, feel free to create your
-                    own
-                    <a href="tilesets.html">tilesets(tileset specifications)</a> And let me know on github!
-                </li>
-            </ul></div>
+                </p>
+            </div>
+
+            <div style="display:none;">
+                <h2>Instructions</h2>
+                <ol>
+                    <li>Change Grid Size to whatever you like. The load time grows exponentially, so I recomend a max of
+                        100. The default value is 16</li>
+                    <li>Click "Generate Grid" to preload the grid</li>
+                    <li>Fill in any square on the grid by clicking on it, then selecting an available option.</li>
+                    <li>Click "Solve" to start the Algorithm</li>
+                </ol>
+
+                <h2>Acknowledgements</h2>
+                <ul>
+                    <li>Background Art: "Neon Lights" by <a href="https://kvacm.artstation.com/projects/B13O2l">Michal
+                            Kváč
+                            (artstation.com)</a></li>
+                    <li>Favicon: "How to Create an Isometric Pixel Art Vehicle in Adobe Photoshop" by <a
+                            href="https://design.tutsplus.com/tutorials/how-to-create-an-isometric-pixel-art-vehicle-in-adobe-photoshop--cms-22550">René
+                            Alejandro Hernández
+                            (tutsplus.com) </a></li>
+                    <li>I'm admitedly not the best artist. If you're interested in making my day, feel free to create
+                        your
+                        own
+                        <a href="tilesets.html">tilesets(tileset specifications)</a> And let me know on github!
+                    </li>
+                </ul>
+            </div>
 
 
 
@@ -57,23 +71,16 @@
 
     </div>
     <div class="grid-options">
-        <label for="dimX">Grid Size X:</label>
-        <input type="number" id="dimX" name="dimX"><br><br>
-        <label for="dimY">Grid Size Y:</label>
-        <input type="number" id="dimY" name="dimY"><br><br>
-        <label for="loadData">(Optional) Load from matrix</label>
-        <input type="text" id="loadData"><br><br>
-        <button onclick="document.getElementById('loadData').value = ''" id="clearBtn" class="clearBtn">Clear</button>
-        <br><br>
-        <label for="useOG">Use OG Texture?</label>
-        <input type="checkbox" id="useOG" class="useOG"><br><br>
-        <label for="Toggle Step Mode">Toggle Animation Delay</label>
+        <label for="dimX">Grid Width</label>
+        <input type="number" id="dimX" name="dimX" value="16"><br><br>
+        <label for="dimY">Grid Height</label>
+        <input type="number" id="dimY" name="dimY" value="16"><br><br>
+        <label for="Toggle Step Mode">Animation Delay</label>
         <input type="checkbox" id="delay" class="delay"><br><br>
     </div>
 
     <button onclick="gen()" id="generateBtn" class="GUIButton">Generate Grid</button>
     <button onclick="solve()" id="solveBtn" class="GUIButton" disabled=true>Solve</button>
-    <button onclick="copy()" id="copyBtn" class="GUIButton">Copy</button>
     <br><br>
     <div id="addSquareModal" class="modal">
         <div class="modal-content">
@@ -94,7 +101,10 @@
         </div>
 
     </div>
-    <canvas id="canvas" width="10" height="10" style="border:1px solid #d3d3d3;"></canvas>
+    <div class="boxUsedToCenterCanvasOnScreenOnMobileDevices">
+        <canvas id="canvas" width="10" height="10" style="border:1px solid #d3d3d3;"></canvas>
+    </div>
+    
 
 
 </body>

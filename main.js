@@ -63,13 +63,8 @@ function loadImages() {
     for (let i = 0; i < 12; i++) {
         ims.push(new Image());
     }
-    let suffix;
-    //Choose between OG(crappy) tiles or New(nice) road tiles.
-    if (document.querySelector(".useOG").checked) {
-        suffix = ".png";
-    }else{
-        suffix = "ROAD.png"
-    }
+    let suffix= "ROAD.png";
+    
     ims[0].src = "img/BLANK" + suffix;
     ims[1].src = "img/HORIZ" + suffix;
     ims[2].src = "img/VERT" + suffix;
@@ -105,7 +100,6 @@ function makeGrid() {
             ctx.fillRect(i * w / DIMX, j * h / DIMY, w / DIMX+1, h / DIMY+1);
         }
     }
-    console.table(grid);
 }
 /**
  * Fills in a square on the board
@@ -383,14 +377,10 @@ function load(m){
  * Resets and generates the starting board
  */
 function gen() {
-    w = window.innerWidth-30;
+    w = window.innerWidth-20;
     h = w;
 
-    if(document.getElementById("loadData").value!=""){
-        
-        load(document.getElementById("loadData").value);
-        
-    }else{
+    
 
     DIMX = document.getElementById("dimX").value;
     DIMY = document.getElementById("dimY").value;
@@ -411,7 +401,7 @@ function gen() {
     makeGrid();
 
     loadImages();
-}
+
     /*
     const q = new tile(true, [1], [0, 0]);
     grid[0][0] = q
